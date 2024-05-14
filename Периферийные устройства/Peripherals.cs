@@ -8,6 +8,7 @@ namespace Периферийные_устройства
 {
     abstract class Peripherals
     {
+        //Объявление свойства Name типа string для хранения имени периферийного устройства
         public string Name { get; set; }
         public string Type { get; set; }
         public string Country { get; set; }
@@ -15,6 +16,7 @@ namespace Периферийные_устройства
         public Peripherals() { }
         public Peripherals(string name, string type, string country, int year)
         {
+            //Присваивание переданных значений параметров свойствам объекта
             this.Name = name;
             this.Type = type;
             this.Country = country;
