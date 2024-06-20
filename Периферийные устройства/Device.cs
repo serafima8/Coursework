@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Периферийные_устройства
 {
-    //Объявление класса Device для управления периферийными устройствами
+    //класс для управления периферийными устройствами
     class Device 
     {
-        //Приватное поле для хранения списка периферийных устройств
+        // для хранения списка периферийных устройств
         private List<Peripherals> peripherals = new List<Peripherals>();
         //Метод для добавления нового периферийного устройства в список
         public void AddPeripheral()
@@ -144,71 +144,89 @@ namespace Периферийные_устройства
             Console.Clear();
             DisplayAllDevices();
         }
-        // метод для добавления устройства после определенного типа 
+        // метод для добавления устройства после определенного номера
         public void AddDeviceAfter()
         {
-            Console.Write("Введите тип устройства, после которого нужно добавить новое устройство: ");
-            string deviceTypeToInsertAfter = Console.ReadLine();
-            Console.WriteLine("Введите данные для нового устройства:");
-            Console.Write("Введите название компании: ");
-            string name = Console.ReadLine();
-            Console.Write("Введите тип устройства: ");
-            string type = Console.ReadLine();
-            Console.Write("Введите страну производства: ");
-            string country = Console.ReadLine();
-            Console.Write("Введите год производства: ");
-            int year = Convert.ToInt32(Console.ReadLine());
-            //Создаем новый объект устройства и добавляем его после определенного типа
-            Peripherals newPeripheral = new Supplement(name, type, country, year);
-            //Определение переменной index, которая будет содержать индекс первого вхождения элемента в списке, удовлетворяющего условию, заданному в лямбда-выражении
-            int index = peripherals.FindIndex(device => device.Type == deviceTypeToInsertAfter);
-            // Проверка, найдено ли устройство с заданным типом в списке
-            if (index != -1)
+            Console.WriteLine("Список устройств:");
+            //Цикл для перебора всех элементов в списке устройств
+            for (int i = 0; i < peripherals.Count; i++)
             {
-                //Вставка нового устройства в список после устройства с заданным типом
-                peripherals.Insert(index + 1, newPeripheral);
+                //Вывод информации о каждом устройстве 
+                Console.WriteLine($"{i + 1}. Название компании: {peripherals[i].Name}, Тип устройства: {peripherals[i].Type}, Страна производства: {peripherals[i].Country}, Год производства{peripherals[i].Year}");
+            }
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("Введите номер устройства, после которого нужно добавить новое устройство: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            int deviceNumberToInsertAfter = Convert.ToInt32(Console.ReadLine()) - 1; // уменьшаем на 1, так как индексы начинаются с 0
+            if (deviceNumberToInsertAfter >= 0 && deviceNumberToInsertAfter < peripherals.Count)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Введите данные для нового устройства:");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("Введите название компании: ");
+                string name = Console.ReadLine();
+                Console.Write("Введите тип устройства: ");
+                string type = Console.ReadLine();
+                Console.Write("Введите страну производства: ");
+                string country = Console.ReadLine();
+                Console.Write("Введите год производства: ");
+                int year = Convert.ToInt32(Console.ReadLine());
+
+                Peripherals newPeripheral = new Supplement(name, type, country, year);
+                peripherals.Insert(deviceNumberToInsertAfter + 1, newPeripheral);
+
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Устройство успешно добавлено после устройства типа '{deviceTypeToInsertAfter}'.");
+                Console.WriteLine($"Устройство успешно добавлено после устройства номер '{deviceNumberToInsertAfter + 1}'.");
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Устройство с типом '{deviceTypeToInsertAfter}' не найдено в списке.");
+                Console.WriteLine($"Устройства с номером '{deviceNumberToInsertAfter + 1}' не существует.");
             }
             Console.ReadLine();
             Console.ForegroundColor = ConsoleColor.White;
             Console.Clear();
             DisplayAllDevices();
         }
-        // метод для добавления устройства перед определенным типом
+
+        // метод для добавления устройства перед определенным номером
         public void AddDeviceBefore()
         {
-            Console.Write("Введите тип устройства, перед которым нужно добавить новое устройство: ");
-            string deviceTypeToInsertBefore = Console.ReadLine();
-            Console.WriteLine("Введите данные для нового устройства:");
-            Console.Write("Введите название компании: ");
-            string name = Console.ReadLine();
-            Console.Write("Введите тип устройства: ");
-            string type = Console.ReadLine();
-            Console.Write("Введите страну производства: ");
-            string country = Console.ReadLine();
-            Console.Write("Введите год производства: ");
-            int year = Convert.ToInt32(Console.ReadLine());
-            Peripherals newPeripheral = new Supplement(name, type, country, year);
-            //Определение переменной index, которая будет содержать индекс первого вхождения элемента в списке, удовлетворяющего условию, заданному в лямбда-выражении
-            int index = peripherals.FindIndex(device => device.Type == deviceTypeToInsertBefore);
-            //Проверка, найдено ли устройство с заданным типом в списке
-            if (index != -1)
+            Console.WriteLine("Список устройств:");
+            //Цикл для перебора всех элементов в списке устройств
+            for (int i = 0; i < peripherals.Count; i++)
             {
-                //Вставка нового устройства в список перед устройством с заданным типом
-                peripherals.Insert(index, newPeripheral);
+                //Вывод информации о каждом устройстве в формате "номер. Название, Тип, Страна, Год"
+                Console.WriteLine($"{i + 1}. Название компании: {peripherals[i].Name}, Тип устройства: {peripherals[i].Type}, Страна производства: {peripherals[i].Country}, Год производства{peripherals[i].Year}");
+            }
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("Введите номер устройства, перед которым нужно добавить новое устройство: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            int deviceNumberToInsertBefore = Convert.ToInt32(Console.ReadLine()) - 1; // уменьшаем на 1, так как индексы начинаются с 0
+            if (deviceNumberToInsertBefore >= 0 && deviceNumberToInsertBefore < peripherals.Count)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Введите данные для нового устройства:");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("Введите название компании: ");
+                string name = Console.ReadLine();
+                Console.Write("Введите тип устройства: ");
+                string type = Console.ReadLine();
+                Console.Write("Введите страну производства: ");
+                string country = Console.ReadLine();
+                Console.Write("Введите год производства: ");
+                int year = Convert.ToInt32(Console.ReadLine());
+
+                Peripherals newPeripheral = new Supplement(name, type, country, year);
+                peripherals.Insert(deviceNumberToInsertBefore, newPeripheral);
+
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Устройство успешно добавлено перед устройством типа '{deviceTypeToInsertBefore}'.");
+                Console.WriteLine($"Устройство успешно добавлено перед устройством номер '{deviceNumberToInsertBefore + 1}'.");
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Устройство типа '{deviceTypeToInsertBefore}' не найдено в списке.");
+                Console.WriteLine($"Устройства с номером '{deviceNumberToInsertBefore + 1}' не существует.");
             }
             Console.ReadLine();
             Console.ForegroundColor = ConsoleColor.White;
@@ -223,10 +241,11 @@ namespace Периферийные_устройства
             for (int i = 0; i < peripherals.Count; i++)
             {
                 //Вывод информации о каждом устройстве в формате "номер. Название, Тип, Страна, Год"
-                Console.WriteLine($"{i + 1}. {peripherals[i].Name}, {peripherals[i].Type}, {peripherals[i].Country}, {peripherals[i].Year}");
+                Console.WriteLine($"{i + 1}. Название компании: {peripherals[i].Name}, Тип устройства: {peripherals[i].Type}, Страна производства: {peripherals[i].Country}, Год производства{peripherals[i].Year}");
             }
-
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("\nВведите номер устройства для удаления: ");
+            Console.ForegroundColor = ConsoleColor.White;
             //Переменная для хранения номера устройства, введенного пользователем
             int deviceNumber;
             //Проверка, успешно ли удалось преобразовать введенное значение в целое число, и находится ли введенный номер в допустимом диапазоне (от 1 до количества устройств в списке)
@@ -311,7 +330,7 @@ namespace Периферийные_устройства
         //метод для вывода из списка устройств только мониторы 
         public void SaveMonitorsToFile()
         {
-            string file = @"E:\Периферийные устройства\monitor.bin";
+            string file = @"F:\Периферийные устройства\monitor.bin";
             try
             {
                 //Фильтрация списка устройств, чтобы получить только мониторы
@@ -362,7 +381,7 @@ namespace Периферийные_устройства
         // Метод для загрузки данных из файла
         public void LoadDataFromFile(Device device)
         {
-            string file = @"E:\Периферийные устройства\device.bin";
+            string file = @"F:\Периферийные устройства\device.bin";
             try
             {
                 //Проверка, существует ли файл с данными
@@ -400,7 +419,7 @@ namespace Периферийные_устройства
         // Метод для сохранения данных в файл
         public void SaveDataToFile(Device device)
         {
-            string file = @"E:\Периферийные устройства\device.bin";
+            string file = @"F:\Периферийные устройства\device.bin";
             try
             {
                 //Открытие файла для записи данных в бинарном формате
